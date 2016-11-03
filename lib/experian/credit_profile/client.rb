@@ -2,6 +2,10 @@ module Experian
   module CreditProfile
     class Client < Experian::Client
 
+      def credit_pull(options = {})
+        submit_request(Request.new(options))
+      end
+
       private
 
       def submit_request(request)

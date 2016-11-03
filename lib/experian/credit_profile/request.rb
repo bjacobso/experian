@@ -1,6 +1,7 @@
 module Experian
   module CreditProfile
     class Request < Experian::Request
+
       def build_request
         super do |xml|
           xml.tag!('EAI', Experian.eai)
@@ -23,6 +24,8 @@ module Experian
       def add_request_content(xml)
         add_subscriber(xml)
         add_primary_applicant(xml)
+        add_risk_models(xml)
+        add_add_ons(xml)
       end
 
       private
@@ -50,7 +53,7 @@ module Experian
         add_employment(xml)
         add_phone(xml)
         xml.tag!('DOB', @options[:dob]) if @options[:dob]
-        xml.tag!('FileUnfreezePIN', @options[:file_unfreeze_pin]) if @options[file_unfreeze_pin]
+        xml.tag!('FileUnfreezePIN', @options[:file_unfreeze_pin]) if @options[:file_unfreeze_pin]
       end
 
       def add_employment(xml)
@@ -69,9 +72,64 @@ module Experian
       end
 
       def add_phone(xml)
-
+        if @options[:phone]
+          phone = @options[:phone]
+          xml.tag!('Phone') do
+            xml.tag!('Number', phone[:number]) if phone[:number] # max length 13 chars
+            # type should be C = Cellular, R = Residential, B = Business, etc.
+            xml.tag!('Type', phone[:type]) if phone[:type]
+          end
+        end
       end
 
+      # def secondary_applicant(xml)
+      # end
+
+      def add_add_ons(xml)
+        xml.tag!('AddOns') do
+          xml.tag!('FraudShield', 'Y')
+        end
+        add_demographic_band(xml)
+        add_credit_score_exception_notice(xml)
+      end
+
+      def add_risk_models(xml)
+        xml.tag!('RiskModels') do
+          # Vantage Score 3.0
+          xml.tag!('ModelIndicator', 'V3')
+        end
+      end
+
+      def add_demographic_band(xml)
+      end
+
+      def add_credit_score_exception_notice(xml)
+      end
+
+
+      def add_vendor(xml)
+        xml.tag!('Vendor') do
+          xml.tag!('VendorNumber', Experian.vendor_code)
+        end
+      end
+
+      def add_options(xml)
+        xml.tag!('Options') do
+          xml.tag!('ReferenceNumber', 'Y')
+          xml.tag!('OFAC', 'Y')
+          xml.tag!('OFACMSG', 'Y')
+        end
+      end
+
+      def xml_options(xml)
+        xml.tag!('XML') do
+          # todo What is ARF version exactly? must be either 06 or 07
+          xml.tag!('ARFVersion', 07)
+          xml.tag!('Version', 'Y')
+          xml.tag!('Y2K', 'Y')
+          # xml.tag!('Segment130', 'Y') # what is Segment130
+        end
+      end
     end
   end
 end

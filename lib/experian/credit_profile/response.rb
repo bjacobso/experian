@@ -1,6 +1,6 @@
 module Experian
   module CreditProfile
-    class Response
+    class Response < Experian::Response
 
     end
   end
