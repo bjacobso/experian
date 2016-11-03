@@ -9,6 +9,9 @@ module Experian
     PRECISE_ID_URL = "https://ss3.experian.com/fraudsolutions/xmlgateway/preciseid"
     PRECISE_ID_TEST_URL = "https://dm2.experian.com/fraudsolutions/xmlgateway/preciseid"
 
+    CREDIT_PROFILE_URL = ""
+    CREDIT_PROFILE_TEST_URL = ""
+
     LOOKUP_SERVICE_NAME = "AccessPoint"
     LOOKUP_SERVICE_VERSION = 1.0
 

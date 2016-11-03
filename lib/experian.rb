@@ -10,6 +10,7 @@ require "experian/connect_check"
 require "experian/precise_id"
 require "experian/business_iq"
 require "experian/password_reset"
+require "experian/credit_profile"
 
 module Experian
   include Experian::Constants

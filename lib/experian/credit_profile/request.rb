@@ -1,0 +1,77 @@
+module Experian
+  module CreditProfile
+    class Request < Experian::Request
+      def build_request
+        super do |xml|
+          xml.tag!('EAI', Experian.eai)
+          xml.tag!('DBHost', CreditProfile.db_host)
+          add_reference_id(xml)
+          xml.tag!('Request') do
+            xml.tag!('Products') do
+              xml.tag!('CreditProfile') do
+                add_request_content(xml)
+              end
+            end
+          end
+        end
+      end
+
+      def add_reference_id(xml)
+        xml.tag!('ReferenceId', @options[:reference_id]) if @options[:reference_id]
+      end
+
+      def add_request_content(xml)
+        add_subscriber(xml)
+        add_primary_applicant(xml)
+      end
+
+      private
+
+      def add_subscriber(xml)
+        xml.tag!('Subscriber') do
+          xml.tag!('Preamble', Experian.preamble)
+          xml.tag!('OpInitials', Experian.op_initials)
+          xml.tag!('SubCode', Experian.subcode)
+        end
+      end
+
+      def add_primary_applicant(xml)
+        xml.tag!('PrimaryApplicant') do
+          xml.tag!('Surname', @options[:last_name])
+          xml.tag!('First', @options[:first_name])
+        end
+        xml.tag!('SSN', @options[:ssn])
+        xml.tag!('CurrentAddress') do
+          xml.tag!('Street', @options[:street])
+          xml.tag!('City', @options[:city])
+          xml.tag!('State', @options[:state])
+          xml.tag!('Zip', @options[:zip])
+        end
+        add_employment(xml)
+        add_phone(xml)
+        xml.tag!('DOB', @options[:dob]) if @options[:dob]
+        xml.tag!('FileUnfreezePIN', @options[:file_unfreeze_pin]) if @options[file_unfreeze_pin]
+      end
+
+      def add_employment(xml)
+        # if this <Employment /> tag is empty do things blow up?
+        if @options[:employment]
+          employment = @options[:employment]
+          xml.tag!('Employment') do
+            xml.tag!('Company', employment[:company]) if employment[:company]
+            xml.tag!('Address', employment[:address]) if employment[:address]
+            xml.tag!('City', employment[:city]) if employment[:city]
+            xml.tag!('City', employment[:city]) if employment[:city]
+            xml.tag!('State', employment[:state]) if employment[:state]
+            xml.tag!('Zip', employment[:zip]) if employment[:zip]
+          end
+        end
+      end
+
+      def add_phone(xml)
+
+      end
+
+    end
+  end
+end
