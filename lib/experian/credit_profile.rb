@@ -11,9 +11,9 @@ module Experian
       Experian.test_mode ? DB_HOST_TEST : DB_HOST
     end
 
-    # convenience methods
-    def self.credit_pull(options = {})
-      Client.new.credit_pull(options)
+    # convenience method
+    def self.credit_profile(options = {})
+      Client.new.credit_profile(options)
     end
   end
 end

@@ -2,7 +2,7 @@ module Experian
   module CreditProfile
     class Client < Experian::Client
 
-      def credit_pull(options = {})
+      def credit_profile(options = {})
         submit_request(Request.new(options))
       end
 
@@ -10,6 +10,9 @@ module Experian
 
       def submit_request(request)
         raw_response = super
+        puts '>>>>>>>>>>>>>>>>>>>>>>>'
+        puts raw_response.inspect
+        puts '>>>>>>>>>>>>>>>>>>>>>>>'
         response = Response.new(raw_response.body)
         check_response(response,raw_response)
         [request,response]
@@ -23,6 +26,7 @@ module Experian
 
       def request_uri
         Experian.credit_profile_uri
+        # Experian.net_connect_uri
       end
     end
   end

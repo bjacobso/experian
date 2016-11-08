@@ -30,7 +30,7 @@ module Experian
       end
 
       def request_uri
-        Experian.precice_id_uri
+        Experian.precise_id_uri
       end
 
     end

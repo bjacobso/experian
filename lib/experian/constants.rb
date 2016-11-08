@@ -9,9 +9,6 @@ module Experian
     PRECISE_ID_URL = "https://ss3.experian.com/fraudsolutions/xmlgateway/preciseid"
     PRECISE_ID_TEST_URL = "https://dm2.experian.com/fraudsolutions/xmlgateway/preciseid"
 
-    CREDIT_PROFILE_URL = ""
-    CREDIT_PROFILE_TEST_URL = ""
-
     LOOKUP_SERVICE_NAME = "AccessPoint"
     LOOKUP_SERVICE_VERSION = 1.0
 
@@ -26,6 +23,8 @@ module Experian
     XML_SCHEMA_INSTANCE = "http://www.w3.org/2001/XMLSchema-instance"
     XML_SCHEMA_LOCATION = "http://www.experian.com/NetConnect NetConnect.xsd"
     XML_REQUEST_NAMESPACE = "http://www.experian.com/WebDelivery"
+
+    WEB_DELIVERY_VERSION = "2.608"
 
     COMPLETION_CODES = {
       "0000" => "Request processed successfully",
