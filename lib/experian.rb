@@ -17,7 +17,8 @@ module Experian
 
   class << self
 
-    attr_accessor :eai, :preamble, :op_initials, :subcode, :user, :password, :vendor_number
+    attr_accessor :eai, :preamble, :op_initials, :subcode, :user, :password,
+                  :vendor_number, :risk_models, :reference_number
     attr_accessor :test_mode, :proxy, :logger
 
     def configure

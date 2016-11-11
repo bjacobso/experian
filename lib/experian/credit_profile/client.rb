@@ -6,13 +6,14 @@ module Experian
         submit_request(Request.new(options))
       end
 
+      def custom_solution(options = {})
+        submit_request(CustomSolutionRequest.new(options))
+      end
+
       private
 
       def submit_request(request)
         raw_response = super
-        puts '>>>>>>>>>>>>>>>>>>>>>>>'
-        puts raw_response.inspect
-        puts '>>>>>>>>>>>>>>>>>>>>>>>'
         response = Response.new(raw_response.body)
         check_response(response,raw_response)
         [request,response]
@@ -26,7 +27,6 @@ module Experian
 
       def request_uri
         Experian.credit_profile_uri
-        # Experian.net_connect_uri
       end
     end
   end
