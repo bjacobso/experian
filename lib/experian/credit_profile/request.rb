@@ -173,7 +173,7 @@ module Experian
       end
 
       def arf_version
-        Experian::CONSTANTS::ARF_VERSION
+        Experian::Constants::ARF_VERSION
       end
     end
   end

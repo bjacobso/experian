@@ -1,6 +1,7 @@
 require 'experian/credit_profile/client'
-require 'experian/credit_profile/request'
 require 'experian/credit_profile/custom_solution_request'
+require 'experian/credit_profile/indicator_codes'
+require 'experian/credit_profile/request'
 require 'experian/credit_profile/response'
 
 module Experian

@@ -1,3 +1,5 @@
+require 'experian/credit_profile/request'
+
 module Experian
   module CreditProfile
     class CustomSolutionRequest < Request
@@ -12,6 +14,10 @@ module Experian
         super do |xml|
           xml.tag!('CustomRRDashKeyword', Experian.test_mode ? 'XXP1' : 'DXP1')
         end
+      end
+
+      def add_risk_models(xml)
+        nil
       end
 
       def experian_product

@@ -13,9 +13,14 @@ module Experian
       private
 
       def submit_request(request)
+        puts '>>>>>>>>>>>>>>>>>>>>'
+        puts "#{request.inspect}"
+        puts '<<<<<<<<<<<<<<<<<<<<'
         raw_response = super
         response = Response.new(raw_response.body)
         check_response(response,raw_response)
+        # parse response here to make indicators verbose
+        # response = response.add_node_descriptions
         [request,response]
       end
 
