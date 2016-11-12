@@ -10,13 +10,14 @@ module Experian
 
       def add_node_descriptions
         doc = Nokogiri::XML(xml)
+        doc.remove_namespaces!
         update_fraud_indicators(doc)
         update_score_factors(doc)
         self.xml = doc.to_s
       end
 
       def update_fraud_indicators(doc)
-        doc.xpath('//ns:FraudServices/ns:Indicator', 'ns' => XML_RESPONSE_NAMESPACE).each do |indicator|
+        doc.xpath('//FraudServices/Indicator').each do |indicator|
           code = indicator.content.strip
           unless code.empty?
             indicator['code'] = code
@@ -26,8 +27,8 @@ module Experian
       end
 
       def update_score_factors(doc)
-        doc.xpath('//ns:RiskModel', 'ns' => XML_RESPONSE_NAMESPACE).each do |risk_model|
-          code = risk_model.at_xpath('./ns:ModelIndicator', 'ns' => XML_RESPONSE_NAMESPACE)['code']
+        doc.xpath('//RiskModel').each do |risk_model|
+          code = risk_model.at_xpath('./ModelIndicator')['code']
           if code == 'V3'
             risk_model.children.each do |node|
               if node.name.match(/ScoreFactorCode.+/)

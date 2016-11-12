@@ -16,7 +16,6 @@ module Experian
         raw_response = super
         response = Response.new(raw_response.body)
         check_response(response,raw_response)
-        # parse response here to make indicators verbose
         response.add_node_descriptions
         [request,response]
       end
