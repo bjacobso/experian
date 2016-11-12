@@ -4,7 +4,6 @@ gem 'rake'
 
 group :development do
   gem 'pry'
-  gem 'nokogiri'
 end
 
 group :test do

@@ -23,6 +23,7 @@ module Experian
     XML_SCHEMA_INSTANCE = "http://www.w3.org/2001/XMLSchema-instance"
     XML_SCHEMA_LOCATION = "http://www.experian.com/NetConnect NetConnect.xsd"
     XML_REQUEST_NAMESPACE = "http://www.experian.com/WebDelivery"
+    XML_RESPONSE_NAMESPACE = "http://www.experian.com/ARFResponse"
 
     WEB_DELIVERY_VERSION = "2.608"
 
