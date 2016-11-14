@@ -109,8 +109,9 @@ module Experian
         end
       end
 
-      # def secondary_applicant(xml)
-      # end
+      def secondary_applicant(xml)
+        # TODO --> not implemented
+      end
 
       def add_add_ons(xml)
         xml.tag!('AddOns') do
@@ -136,6 +137,7 @@ module Experian
       end
 
       def add_demographic_band(xml)
+        # TODO --> not implemented
       end
 
       def add_credit_score_exception_notice(xml)

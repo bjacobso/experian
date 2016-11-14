@@ -13,7 +13,33 @@ module Experian
         doc.remove_namespaces!
         update_fraud_indicators(doc)
         update_score_factors(doc)
+        parse_ofac_and_mla(doc)
+        parse_file_hit(doc)
         self.xml = doc.to_s
+      end
+
+      def parse_file_hit(doc)
+        doc.xpath('//InformationalMessage').each do |message|
+          if message.at_xpath('./MessageNumber').content.to_i == NO_RECORD_CODE
+            message['type'] = 'NO_RECORD'
+          end
+        end
+      end
+
+      def parse_ofac_and_mla(doc)
+        doc.xpath('//InformationalMessage').each do |message|
+          next if message.at_xpath('./MessageNumber').content.to_i != OFAC_MLA_INDICATOR
+          message_text = message.at_xpath('./MessageText')
+          code = message_text.content.match(/\d{4}/)[0].to_i # pull out 4 digit indicator code
+          message_text['code'] = code
+          if MLA_CODES.include? code
+            message['type'] = 'MLA'
+          elsif OFAC_CODES.include? code
+            message['type'] = 'OFAC'
+            hit = code.to_i == OFAC_HIT ? 'Hit' : 'NoHit'
+            message << "<OFACHit>#{hit}</OFACHit>"
+          end
+        end
       end
 
       def update_fraud_indicators(doc)

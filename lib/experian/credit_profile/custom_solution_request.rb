@@ -4,8 +4,8 @@ module Experian
   module CreditProfile
     class CustomSolutionRequest < Request
       #
-      # For Premier Attributes we need to use CustomSolution which is effectively
-      # CreditProfile with some additional attributes
+      # CustomSolution is effectively CreditProfile
+      # with some custom configured return attributes.
       #
 
       private
