@@ -52,10 +52,8 @@ module Experian
     end
 
     def credit_profile_uri
-      ## Skipping add_credentials
       perform_ecals_lookup if ecals_lookup_required?
-      # uri = URI.parse(test_mode? ? Experian::CREDIT_PROFILE_TEST_URL : Experian::CREDIT_PROFILE_URL)
-      # add_credentials(uri)
+      # add_credentials(uri) # credentials are passed in encrypted header instead
       @net_connect_uri
     end
 
@@ -81,17 +79,8 @@ module Experian
     def assert_experian_domain
       unless @net_connect_uri.host.end_with?('.experian.com')
         @net_connect_uri = nil
-        raise Experian::ClientError, "Could not authenticate connection to Experian, unexpected host name."
+        raise Experian::ClientError, 'Could not authenticate connection to Experian, unexpected host name.'
       end
-    end
-
-    def certificate_authentication
-      # Prior to posting data, the client must check the URL and digital certs on the HTTPS server.
-      # :assert_experian_domain checks that the url domain is experian
-      # URL in the certificate mush match the URL retrieved from ECALS (i.e. @net_connect_uri)
-      # The certificate must be valid and trusted
-      # The certificate must not be expired
-      ## => should this already be happening behind the scenes by OpenSSL ?
     end
 
     def service_name
