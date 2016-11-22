@@ -14,7 +14,7 @@ describe Experian::BusinessIq::Request do
       zip: '40204',
     }
 
-    resp = client.get_premier_profile(params)
+    # resp = client.get_premier_profile(params)
   end
 
 end
