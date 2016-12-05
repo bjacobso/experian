@@ -27,6 +27,10 @@ module Experian
         hash_path(@response,"Products","PreciseIDServer","SessionID")
       end
 
+      def fpd_score
+        hash_path(@response,"Products","PreciseIDServer","Summary","FPDScore")
+      end
+
       def score
         hash_path(@response,"Products","PreciseIDServer","Summary","PreciseIDScore")
       end
