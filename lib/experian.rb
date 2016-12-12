@@ -10,13 +10,15 @@ require "experian/connect_check"
 require "experian/precise_id"
 require "experian/business_iq"
 require "experian/password_reset"
+require "experian/credit_profile"
 
 module Experian
   include Experian::Constants
 
   class << self
 
-    attr_accessor :eai, :preamble, :op_initials, :subcode, :user, :password, :vendor_number
+    attr_accessor :eai, :preamble, :op_initials, :subcode, :user, :password,
+                  :vendor_number, :risk_models, :reference_number
     attr_accessor :test_mode, :proxy, :logger
 
     def configure
@@ -44,9 +46,15 @@ module Experian
       add_credentials(@net_connect_uri)
     end
 
-    def precice_id_uri
+    def precise_id_uri
       uri = URI.parse(test_mode? ? Experian::PRECISE_ID_TEST_URL : Experian::PRECISE_ID_URL)
       add_credentials(uri)
+    end
+
+    def credit_profile_uri
+      perform_ecals_lookup if ecals_lookup_required?
+      # add_credentials(uri) # credentials are passed in encrypted header instead
+      @net_connect_uri
     end
 
     def add_credentials(uri)
@@ -71,7 +79,7 @@ module Experian
     def assert_experian_domain
       unless @net_connect_uri.host.end_with?('.experian.com')
         @net_connect_uri = nil
-        raise Experian::ClientError, "Could not authenticate connection to Experian, unexpected host name."
+        raise Experian::ClientError, 'Could not authenticate connection to Experian, unexpected host name.'
       end
     end
 

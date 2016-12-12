@@ -1,17 +1,13 @@
 module Experian
-  module PreciseId
+  module CreditProfile
     class Client < Experian::Client
 
-      def check_id(options = {})
-        submit_request(PrimaryRequest.new(options))
+      def credit_profile(options = {})
+        submit_request(Request.new(options))
       end
 
-      def request_questions(options = {})
-        submit_request(SecondaryRequest.new(options))
-      end
-
-      def send_answers(options = {})
-        submit_request(FinalRequest.new(options))
+      def custom_solution(options = {})
+        submit_request(CustomSolutionRequest.new(options))
       end
 
       private
@@ -20,6 +16,7 @@ module Experian
         raw_response = super
         response = Response.new(raw_response.body)
         check_response(response,raw_response)
+        response.add_node_descriptions
         [request,response]
       end
 
@@ -30,9 +27,8 @@ module Experian
       end
 
       def request_uri
-        Experian.precise_id_uri
+        Experian.credit_profile_uri
       end
-
     end
   end
 end

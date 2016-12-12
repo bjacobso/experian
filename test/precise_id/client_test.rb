@@ -18,7 +18,7 @@ describe Experian::PreciseId::Client do
       status:200,
       body:"<NetConnectResponse><CompletionCode>0000</CompletionCode><ReferenceId/></NetConnectResponse>",
       headers:{}
-    })
+    }, '')
     @client.stubs(:post_request).returns(response)
     @logger.expects(:debug).with("Unknown Experian Error Detected, Raw response: #{response.inspect}")
     @client.check_id

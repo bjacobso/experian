@@ -30,8 +30,8 @@ Gramm- Leach-Bliley (GLB) Act.*
 * Collection Advantage interactive
 * Collection Report
 * **Connect Check**
-* Credit Profile
-* Custom Solution
+* **Credit Profile**
+* **Custom Solution**
 * Cross View
 * CU Decision Expert
 * Custom Strategist
