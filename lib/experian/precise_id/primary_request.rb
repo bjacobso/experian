@@ -1,7 +1,7 @@
 module Experian
   module PreciseId
     class PrimaryRequest < Request
-      
+
       def add_request_content(xml)
         xml.tag!('XMLVersion', "5.0")
         add_subscriber(xml)
@@ -30,7 +30,8 @@ module Experian
           end
           xml.tag!('SSN', @options[:ssn]) if @options[:ssn]
           add_current_address(xml)
-          add_phone_numebr(xml)
+          add_driver_license(xml)
+          add_phone_number(xml)
           xml.tag!('DOB', @options[:dob]) if @options[:dob]
           xml.tag!('EmailAddress', @options[:email]) if @options[:email]
         end
@@ -45,10 +46,18 @@ module Experian
         end if @options[:zip]
       end
 
-      def add_phone_numebr(xml)
+      def add_phone_number(xml)
         xml.tag!('Phone') do
           xml.tag!('Number', @options[:phone])
+          xml.tag!('Type', @options[:phone_type] || "C") # default to Cellular
         end if @options[:phone]
+      end
+
+      def add_driver_license(xml)
+        xml.tag!('DriverLicense') do
+          xml.tag!('State', @options[:dl_state])
+          xml.tag!('Number', @options[:dl_number])
+        end if @options[:dl_number] && @options[:dl_state]
       end
 
       def add_vendor(xml)
