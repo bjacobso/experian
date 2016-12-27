@@ -34,17 +34,14 @@ module Experian
         raise Experian::ServerError, "Response Code: #{response.status}"
       else
         if !!(response.headers["Location"] =~ /sso_logon/)
-          puts response.inspect
-          raise Experian::Forbidden, "Invalid Experian login credentials" 
+          raise Experian::Forbidden, "Invalid Experian login credentials"
         else
           response
         end
       end
     end
 
-
-
-    # private
+    private
 
     def post_request(request)
       connection = Excon.new(request_uri.to_s, excon_options)
@@ -58,7 +55,6 @@ module Experian
     end
 
     def request_uri
-      # Experian.credit_profile_uri
       Experian.net_connect_uri
     end
 

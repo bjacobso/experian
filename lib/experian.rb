@@ -53,7 +53,7 @@ module Experian
 
     def credit_profile_uri
       perform_ecals_lookup if ecals_lookup_required?
-      # add_credentials(uri) # credentials are passed in encrypted header instead
+      # add_credentials(uri) # credentials are passed in encrypted header
       @net_connect_uri
     end
 
