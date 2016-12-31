@@ -47,6 +47,14 @@ module Experian
         hash_path(@response,"Products","PreciseIDServer","KBAScore","ScoreSummary","AcceptReferCode")
       end
 
+      def drivers_license_format_validation
+        hash_path(@response,"Products","PreciseIDServer","Checkpoint","ValidationSegment", "DriversLicenseFormatValidation")
+      end
+
+      def ssn_code
+        hash_path(@response,"Products","PreciseIDServer","GLBDetail","CheckpointSummary", "SSNCode")
+      end
+
       def questions
         questions = hash_path(@response,"Products","PreciseIDServer","KBA","QuestionSet")
         if questions
