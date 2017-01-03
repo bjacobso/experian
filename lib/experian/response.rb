@@ -76,11 +76,15 @@ module Experian
             end
           end
         else
-          response = node.text
+          response =
+            if node.text.blank?
+              node.attributes.get_attribute("code").try(:value).try(:strip).presence
+            else
+              node.text.strip
+            end
         end
         response
       end
 
   end
 end
-
