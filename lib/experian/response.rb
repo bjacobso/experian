@@ -61,7 +61,11 @@ module Experian
       end
 
       def error_action_indicator_message
-        Experian::ERROR_ACTION_INDICATORS[error_action_indicator]
+        if error_code_response
+          error_code_response["ActionIndicator"]
+        else
+          Experian::ERROR_ACTION_INDICATORS[error_action_indicator]
+        end
       end
 
       private
