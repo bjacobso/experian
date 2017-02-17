@@ -45,5 +45,9 @@ module Experian
       "S" => "Suspend"
     }
 
+    ERROR_CODES = {
+      407 => "UNABLE TO STANDARDIZE CURRENT ADDRESS"
+    }
+
   end
 end
