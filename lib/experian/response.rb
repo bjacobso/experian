@@ -44,7 +44,7 @@ module Experian
 
       def error_code?
         xml = REXML::Document.new(@xml)
-        REXML::XPath.first(xml, '//Error').any?
+        REXML::XPath.first(xml, '//Error').present?
       end
 
       def error_code

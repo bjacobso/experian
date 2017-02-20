@@ -75,6 +75,10 @@ module Experian
         end
       end
 
+      def resubmit?
+        error_code? && error_code_message.match(/TEMPORARILY UNAVAILABLE.*PLEASE RESUBMIT/)
+      end
+
     end
   end
 end
