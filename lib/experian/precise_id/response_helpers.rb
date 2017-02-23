@@ -25,7 +25,7 @@ module Experian
         hash_path(@response,"Products","PreciseIDServer","KBAScore","ScoreSummary","AcceptReferCode")
       end
 
-      def driver_license_format_validation
+      def drivers_license_format_validation
         hash_path(@response, "Products","PreciseIDServer","Checkpoint","ValidationSegment","DriversLicenseFormatValidation")
       end
 
@@ -56,8 +56,14 @@ module Experian
       def address_high_risk_result
         hash_path(@response, "Products","PreciseIDServer","Checkpoint","GeneralResults","AddressHighRiskResult")
       end
+
       def consumer_id_zip_code
-        hash_path(@response, "Products","PreciseIDServer","Checkpoint","ConsumerIDVerification").first["ZipCode"]
+        consumer_id_verification = hash_path(@response, "Products","PreciseIDServer","Checkpoint","ConsumerIDVerification")
+        if consumer_id_verification.is_a? Array
+          consumer_id_verification.first["ZipCode"]
+        else
+          consumer_id_verification["ZipCode"]
+        end
       end
 
       def phone_high_risk_result
