@@ -1,6 +1,10 @@
+require_relative "response_helpers"
+
 module Experian
   module PreciseId
     class Response < Experian::Response
+      include Experian::PreciseId::ResponseHelpers
+
       def success?
         super && has_precise_id_section? && !error?
       end
@@ -21,38 +25,6 @@ module Experian
         end
 
         super || error_message
-      end
-
-      def session_id
-        hash_path(@response,"Products","PreciseIDServer","SessionID")
-      end
-
-      def fpd_score
-        hash_path(@response,"Products","PreciseIDServer","Summary","FPDScore")
-      end
-
-      def score
-        hash_path(@response,"Products","PreciseIDServer","Summary","PreciseIDScore")
-      end
-
-      def initial_decision
-        hash_path(@response,"Products","PreciseIDServer","Summary","InitialResults","InitialDecision")
-      end
-
-      def final_decision
-        hash_path(@response,"Products","PreciseIDServer","Summary","InitialResults","FinalDecision")
-      end
-
-      def accept_refer_code
-        hash_path(@response,"Products","PreciseIDServer","KBAScore","ScoreSummary","AcceptReferCode")
-      end
-
-      def drivers_license_format_validation
-        hash_path(@response,"Products","PreciseIDServer","Checkpoint","ValidationSegment", "DriversLicenseFormatValidation")
-      end
-
-      def ssn_code
-        hash_path(@response,"Products","PreciseIDServer","GLBDetail","CheckpointSummary", "SSNCode")
       end
 
       def questions
