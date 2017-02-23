@@ -79,9 +79,9 @@ module Experian
       def ssn_result
         hash_path(@response, "Products","PreciseIDServer","Checkpoint","GeneralResults","SSNResult")
       end
-      
-      def ssn_issue_result_code
-        hash_path(@response, "Products","PreciseIDServer","Checkpoint","GeneralResults","SSNIssueResultCode")
+
+      def ssn_code
+        hash_path(@response,"Products","PreciseIDServer","GLBDetail","CheckpointSummary", "SSNCode")
       end
     end
   end
