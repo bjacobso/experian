@@ -1,6 +1,7 @@
 module Experian
   module PreciseId
     class Response < Experian::Response
+
       def success?
         super && has_precise_id_section? && !error?
       end
@@ -47,12 +48,56 @@ module Experian
         hash_path(@response,"Products","PreciseIDServer","KBAScore","ScoreSummary","AcceptReferCode")
       end
 
-      def drivers_license_format_validation
-        hash_path(@response,"Products","PreciseIDServer","Checkpoint","ValidationSegment", "DriversLicenseFormatValidation")
+      def driver_license_format_validation
+        hash_path(@response, "Products","PreciseIDServer","Checkpoint","ValidationSegment","DriversLicenseFormatValidation")
+      end
+      def driver_license_result
+        hash_path(@response, "Products","PreciseIDServer","Checkpoint","GeneralResults","DriverLicenseResult")
       end
 
-      def ssn_code
-        hash_path(@response,"Products","PreciseIDServer","GLBDetail","CheckpointSummary", "SSNCode")
+      def review_reference_id
+        hash_path(@response, "Products","PreciseIDServer","Summary","ReviewReferenceID")
+      end
+      def validation_score
+        hash_path(@response, "Products","PreciseIDServer","Summary","ValidationScore")
+      end
+      def verification_score
+        hash_path(@response, "Products","PreciseIDServer","Summary","VerificationScore")
+      end
+
+      def address_verification_result
+        hash_path(@response, "Products","PreciseIDServer","Checkpoint","GeneralResults","AddressVerificationResult")
+      end
+      def address_mismatch
+        hash_path(@response, "Products","PreciseIDServer","Checkpoint","GeneralResults","AddressUnitMismatchResult")
+      end
+      def address_high_risk_result
+        hash_path(@response, "Products","PreciseIDServer","Checkpoint","GeneralResults","AddressHighRiskResult")
+      end
+      def consumer_id_zip_code
+        hash_path(@response, "Products","PreciseIDServer","Checkpoint","ConsumerIDVerification").first["ZipCode"]
+      end
+
+      def phone_high_risk_result
+        hash_path(@response, "Products","PreciseIDServer","Checkpoint","GeneralResults","PhoneHighRiskResult")
+      end
+      def phone_verification_result
+        hash_path(@response, "Products","PreciseIDServer","Checkpoint","GeneralResults","PhoneVerificationResult")
+      end
+
+      def date_of_birth_match
+        hash_path(@response, "Products","PreciseIDServer","Checkpoint","GeneralResults", "DateOfBirthMatch")
+      end
+
+      def ofac_validation_result
+        hash_path(@response, "Products","PreciseIDServer","Checkpoint","ValidationSegment","OFACValidationResult")
+      end
+
+      def ssn_result
+        hash_path(@response, "Products","PreciseIDServer","Checkpoint","GeneralResults","SSNResult")
+      end
+      def ssn_issue_result_code
+        hash_path(@response, "Products","PreciseIDServer","Checkpoint","GeneralResults","SSNIssueResultCode")
       end
 
       def questions
