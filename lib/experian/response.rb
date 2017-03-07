@@ -42,8 +42,30 @@ module Experian
         @response["ErrorTag"]
       end
 
+      def error_code?
+        xml = REXML::Document.new(@xml)
+        REXML::XPath.first(xml, '//Error').present?
+      end
+
+      def error_code
+        error_code_response['ErrorCode'].to_i
+      end
+
+      def error_code_response
+        error_node = REXML::XPath.first(REXML::Document.new(@xml), '//Error')
+        parse_element(error_node) if error_node
+      end
+
+      def error_code_message
+        Experian::ERROR_CODES[error_code]
+      end
+
       def error_action_indicator_message
-        Experian::ERROR_ACTION_INDICATORS[error_action_indicator]
+        if error_code_response
+          error_code_response["ActionIndicator"]
+        else
+          Experian::ERROR_ACTION_INDICATORS[error_action_indicator]
+        end
       end
 
       private
