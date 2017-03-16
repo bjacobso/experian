@@ -59,6 +59,9 @@ module Experian
 
       def consumer_id_zip_code
         consumer_id_verification = hash_path(@response, "Products","PreciseIDServer","Checkpoint","ConsumerIDVerification")
+
+        return nil if consumer_id_verification.nil?
+
         if consumer_id_verification.is_a? Array
           consumer_id_verification.first["ZipCode"]
         else
