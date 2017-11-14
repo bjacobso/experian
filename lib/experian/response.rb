@@ -43,8 +43,7 @@ module Experian
       end
 
       def error_code?
-        xml = REXML::Document.new(@xml)
-        REXML::XPath.first(xml, '//Error').present?
+        error_node.present?
       end
 
       def error_code
@@ -52,8 +51,7 @@ module Experian
       end
 
       def error_code_response
-        error_node = REXML::XPath.first(REXML::Document.new(@xml), '//Error')
-        parse_element(error_node) if error_node
+        parse_element(error_node) if error_code?
       end
 
       def error_code_message
@@ -68,13 +66,43 @@ module Experian
         end
       end
 
+      def statement?
+        statement_node.present?
+      end
+
+      def statement_response
+        parse_element(statement_node) if statement?
+      end
+
+      def statement_code
+        statement_response["Type"]
+      end
+
+      def statement_message
+        statement_response["StatementText"]["MessageText"]
+      end
+
       private
 
+      def xml_doc
+        REXML::Document.new(@xml)
+      end
+
+      def error_node
+        REXML::XPath.first(xml_doc, "//Error")
+      end
+
+      def root_node
+        REXML::XPath.first(xml_doc, "//NetConnectResponse")
+      end
+
+      def statement_node
+        REXML::XPath.first(xml_doc, "//Statement")
+      end
+
       def parse_xml_response
-        xml = REXML::Document.new(@xml)
-        root = REXML::XPath.first(xml, "//NetConnectResponse")
-        if root
-          parse_element(root)
+        if root_node
+          parse_element(root_node)
         else
           raise Experian::ClientError, "Invalid xml response from Experian"
         end
