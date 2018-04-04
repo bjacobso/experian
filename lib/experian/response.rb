@@ -89,7 +89,7 @@ module Experian
       end
 
       def error_node
-        REXML::XPath.first(xml_doc, "//Error")
+        REXML::XPath.match(xml_doc, "//Error").last
       end
 
       def root_node
