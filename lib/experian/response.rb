@@ -104,6 +104,9 @@ module Experian
         if root_node
           parse_element(root_node)
         else
+          puts '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
+          puts xml_doc
+          puts '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'
           raise Experian::ClientError, "Invalid xml response from Experian"
         end
       end
