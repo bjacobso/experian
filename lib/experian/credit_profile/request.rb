@@ -29,6 +29,7 @@ module Experian
       def add_request_content(xml)
         add_subscriber(xml)
         add_primary_applicant(xml)
+        add_account_type(xml)
         add_add_ons(xml)
         add_xml_options(xml)
         add_vendor(xml)
@@ -111,6 +112,13 @@ module Experian
 
       def secondary_applicant(xml)
         # TODO --> not implemented
+      end
+
+      def add_account_type(xml)
+        xml.tag!('AccountType') do
+          xml.tag!('Type', Experian.account_type_code)
+          xml.tag!('Terms', Experian.account_type_terms) if Experian.account_type_terms
+        end if Experian.account_type_code
       end
 
       def add_add_ons(xml)
