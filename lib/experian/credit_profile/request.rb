@@ -123,7 +123,10 @@ module Experian
 
       def add_add_ons(xml)
         xml.tag!('AddOns') do
-          xml.tag!('FraudShield', 'Y')
+          # Including FraudShield by default. However, it can be disabled by passing something other than "Y".
+          if @options.keys.exclude?(:add_on_fraud_shield) || @options[:add_on_fraud_shield] == "Y"
+            xml.tag!('FraudShield', 'Y')
+          end
           xml.tag!('ProfileSummary', 'Y')
           add_risk_models(xml)
           add_demographic_band(xml)
