@@ -13,6 +13,12 @@ module Experian
     end
 
     def validate_response(response)
+      puts "[VALIDATE RESPONSE]"
+      puts response.inspect
+      puts "-------------------------------------------------------------"
+      puts "-------------------------------------------------------------"
+      puts response.body
+      puts '[END RESPONSE]'
       case response.status
       when 302
         # from docs:
