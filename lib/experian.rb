@@ -19,10 +19,12 @@ module Experian
 
     attr_accessor :eai, :preamble, :op_initials, :subcode, :user, :password,
                   :vendor_number, :risk_models, :reference_number, :account_type_code,
-                  :account_type_terms
+                  :account_type_terms, :url, :test_url
     attr_accessor :test_mode, :proxy, :logger
 
     def configure
+      Experian.test_url = PRECISE_ID_TEST_URL
+      Experian.url = PRECISE_ID_URL
       yield self
     end
 
@@ -48,7 +50,7 @@ module Experian
     end
 
     def precise_id_uri
-      uri = URI.parse(test_mode? ? Experian::PRECISE_ID_TEST_URL : Experian::PRECISE_ID_URL)
+      uri = URI.parse(test_mode? ? Experian.test_url : Experian.url)
       add_credentials(uri)
     end
 
