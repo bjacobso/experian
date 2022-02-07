@@ -69,7 +69,6 @@ module Experian
 
     def perform_ecals_lookup
       @net_connect_uri = URI.parse(Excon.get(ecals_uri.to_s).body.strip)
-      assert_experian_domain
       @ecals_last_update = Time.now
     rescue Excon::Errors::SocketError => e
       raise Experian::ClientError, "Could not connect to Experian: #{e.message}"
@@ -77,13 +76,6 @@ module Experian
 
     def ecals_lookup_required?
       @net_connect_uri.nil? || @ecals_last_update.nil? || Time.now - @ecals_last_update > Experian::ECALS_TIMEOUT
-    end
-
-    def assert_experian_domain
-      # unless @net_connect_uri.host.end_with?('.experian.com')
-      #   @net_connect_uri = nil
-      #   raise Experian::ClientError, 'Could not authenticate connection to Experian, unexpected host name.'
-      # end
     end
 
     def service_name
