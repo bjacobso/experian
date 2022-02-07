@@ -23,8 +23,8 @@ module Experian
     attr_accessor :test_mode, :proxy, :logger
 
     def configure
-      Experian.test_url = PRECISE_ID_TEST_URL
-      Experian.url = PRECISE_ID_URL
+      Experian.test_url = Experian::PRECISE_ID_TEST_URL
+      Experian.url = Experian::PRECISE_ID_URL
       yield self
     end
 
