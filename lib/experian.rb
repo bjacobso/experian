@@ -80,10 +80,10 @@ module Experian
     end
 
     def assert_experian_domain
-      unless @net_connect_uri.host.end_with?('.experian.com')
-        @net_connect_uri = nil
-        raise Experian::ClientError, 'Could not authenticate connection to Experian, unexpected host name.'
-      end
+      # unless @net_connect_uri.host.end_with?('.experian.com')
+      #   @net_connect_uri = nil
+      #   raise Experian::ClientError, 'Could not authenticate connection to Experian, unexpected host name.'
+      # end
     end
 
     def service_name
