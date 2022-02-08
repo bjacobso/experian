@@ -19,10 +19,12 @@ module Experian
 
     attr_accessor :eai, :preamble, :op_initials, :subcode, :user, :password,
                   :vendor_number, :risk_models, :reference_number, :account_type_code,
-                  :account_type_terms
+                  :account_type_terms, :url, :test_url
     attr_accessor :test_mode, :proxy, :logger
 
     def configure
+      Experian.test_url = Experian::PRECISE_ID_TEST_URL
+      Experian.url = Experian::PRECISE_ID_URL
       yield self
     end
 
@@ -48,7 +50,7 @@ module Experian
     end
 
     def precise_id_uri
-      uri = URI.parse(test_mode? ? Experian::PRECISE_ID_TEST_URL : Experian::PRECISE_ID_URL)
+      uri = URI.parse(test_mode? ? Experian.test_url : Experian.url)
       add_credentials(uri)
     end
 
@@ -67,7 +69,6 @@ module Experian
 
     def perform_ecals_lookup
       @net_connect_uri = URI.parse(Excon.get(ecals_uri.to_s).body.strip)
-      assert_experian_domain
       @ecals_last_update = Time.now
     rescue Excon::Errors::SocketError => e
       raise Experian::ClientError, "Could not connect to Experian: #{e.message}"
@@ -75,13 +76,6 @@ module Experian
 
     def ecals_lookup_required?
       @net_connect_uri.nil? || @ecals_last_update.nil? || Time.now - @ecals_last_update > Experian::ECALS_TIMEOUT
-    end
-
-    def assert_experian_domain
-      unless @net_connect_uri.host.end_with?('.experian.com')
-        @net_connect_uri = nil
-        raise Experian::ClientError, 'Could not authenticate connection to Experian, unexpected host name.'
-      end
     end
 
     def service_name

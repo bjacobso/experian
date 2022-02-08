@@ -89,6 +89,22 @@ end
 Experian.test_mode = true
 ```
 
+If you want to re-aim the call for mocking or testing just add the urls to the config above like so 
+```ruby
+Experian.configure do |config|
+  config.eai = "X42PB93F"
+  config.preamble = "FCD2"
+  config.op_initials = "AB"
+  config.subcode = "1968543"
+  config.user = "user"
+  config.password = "password"
+  config.vendor_number = "P55"
+  # Urls will default to current offical endpoints
+  config.test_url = "https://123-abc.mock.pstmn.io"
+  config.url = "https://123-abc.mock.pstmn.io"
+end
+```
+
 ### Using a product client
 
 Products are namespaced under the Experian module. Example of how to create a client for the Connect Check product:
