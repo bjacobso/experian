@@ -1,6 +1,23 @@
 module Experian
   class Client
 
+    def append_uri(request)
+      uri = request_uri
+      if (request[:mocking][:enabled] && request[:mocking][:uri])
+        uri = request[:mocking][:uri]
+      end
+      uri
+    end
+
+    def add_headers(request) 
+      headers = request.headers || {}
+      if (request[:mocking][:enabled] && request[:mocking][:headers])
+        headers.merge!(request[:mocking][:headers])
+      else
+        headers
+      end
+    end
+
     def submit_request(request)
       response = post_request(request)
       validate_response(response)
@@ -44,8 +61,10 @@ module Experian
     private
 
     def post_request(request)
-      connection = Excon.new(request_uri.to_s, excon_options)
-      connection.post(body: request.body, headers: request.headers)
+      modified_uri = append_uri(request)
+      headers = add_headers(request)
+      connection = Excon.new(modified_uri.to_s, excon_options) #request_uri is test_url, see experian.rb line 52
+      connection.post(body: request.body, headers: headers)
     end
 
     def excon_options
