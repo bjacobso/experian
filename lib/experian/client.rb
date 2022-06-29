@@ -4,7 +4,7 @@ module Experian
     def append_uri(request)
       uri = request_uri
       if (request[:mocking][:enabled] && request[:mocking][:uri])
-        uri = request[:mocking][:uri]
+        uri += request[:mocking][:uri]
       end
       uri
     end
