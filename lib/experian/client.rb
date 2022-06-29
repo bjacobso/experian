@@ -3,16 +3,17 @@ module Experian
 
     def append_uri(request)
       uri = request_uri
-      if (request[:mocking][:enabled] && request[:mocking][:uri])
-        uri += request[:mocking][:uri]
+      puts request
+      if (request["mocking"] && request["mocking"]["enabled"] && request["mocking"]["uri"])
+        uri += request["mocking"]["uri"]
       end
       uri
     end
 
     def add_headers(request) 
       headers = request.headers || {}
-      if (request[:mocking][:enabled] && request[:mocking][:headers])
-        headers.merge!(request[:mocking][:headers])
+      if (request["mocking"] && request["mocking"]["enabled"] && request["mocking"]["headers"])
+        headers.merge!(request["mocking"]["headers"])
       else
         headers
       end
