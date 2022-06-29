@@ -2,9 +2,7 @@ module Experian
   class Request
 
     attr_reader :xml
-    attr_reader :options
     attr_reader :mocked_uri_string
-    attr_reader :isMocked
 
     def initialize(options = {})
       @options = options
@@ -20,7 +18,7 @@ module Experian
     end
 
     def mocked_uri_string(uri)
-        isMocked ? uri.to_s << mocked_endpoint : uri.to_s
+      isMocked ? uri.to_s << mocked_endpoint : uri.to_s
     end
 
     def build_request
