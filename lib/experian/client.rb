@@ -1,10 +1,6 @@
 module Experian
   class Client
 
-    def mocked_uri(request)
-      request.mocked_uri(uri)
-    end
-
     def submit_request(request)
       response = post_request(request)
       validate_response(response)
@@ -48,8 +44,7 @@ module Experian
     private
 
     def post_request(request)
-      modified_uri = mocked_uri(request)
-      connection = Excon.new(modified_uri.to_s, excon_options) #request_uri is test_url, see experian.rb line 52
+      connection = Excon.new(request.mocked_uri_string(request_uri), excon_options) 
       connection.post(body: request.body, headers: request.headers)
     end
 
