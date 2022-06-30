@@ -44,7 +44,7 @@ module Experian
     private
 
     def post_request(request)
-      connection = Excon.new(request.mocked_uri_string(request_uri), excon_options) 
+      connection = Excon.new(request_uri.to_s << request.mocked_endpoint, excon_options)
       connection.post(body: request.body, headers: request.headers)
     end
 
