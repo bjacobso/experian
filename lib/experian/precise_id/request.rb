@@ -23,6 +23,20 @@ module Experian
       def add_request_content(xml)
         raise "sub classes must override this method"
       end
+
+      def mocking_headers
+        if @options[:mocking] && @options[:mocking]["precise_id"]["enabled"]
+          @options[:mocking]["precise_id"]["headers"]
+        else
+          {}
+        end
+      end
+
+      def headers
+        headers = super
+        headers.merge!(mocking_headers)
+        headers
+      end
     end
   end
 end
