@@ -25,8 +25,8 @@ module Experian
       end
 
       def mocking_headers
-        if @options[:mocking] && @options[:mocking]["precise_id"]["enabled"]
-          @options[:mocking]["precise_id"]["headers"]
+        if @options[:precise_id_mocking] && @options[:precise_id_mocking]["headers"]
+          @options[:precise_id_mocking]["headers"]
         else
           {}
         end

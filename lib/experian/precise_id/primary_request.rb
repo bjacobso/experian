@@ -12,10 +12,6 @@ module Experian
         xml.tag!('IPAddress', @options[:ip_address]) if @options[:ip_address]
       end
 
-      def headers
-        super
-      end
-
       private
 
       def add_subscriber(xml)
