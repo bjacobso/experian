@@ -45,6 +45,7 @@ module Experian
 
     def post_request(request)
       connection = Excon.new(request_uri.to_s, excon_options)
+      byebug
       connection.post(body: request.body, headers: request.headers)
     end
 

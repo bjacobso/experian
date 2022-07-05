@@ -34,7 +34,7 @@ module Experian
 
       def headers
         headers = super
-        headers.merge!(mocking_headers)
+        headers = headers.merge!(mocking_headers)
         headers
       end
     end
