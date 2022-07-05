@@ -9,12 +9,16 @@ module Experian
       @xml = build_request
     end
 
+    def which_mocking_key
+      @options[:mocking] ? @options[:mocking]["key"] : nil
+    end
+
     def mocking
       @options[:mocking] ? @options[:mocking] : {"enabled" => false}
     end
 
     def mocked_endpoint
-      mocking["enabled"] && mocking["endpoint"].length > 0 ? mocking["endpoint"] : ""
+      mocking["enabled"] && mocking[which_mocking_key]["endpoint"].length > 0 ? mocking[which_mocking_key]["endpoint"] : ""
     end
 
     def build_request
