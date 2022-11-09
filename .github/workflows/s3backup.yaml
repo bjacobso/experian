@@ -1,0 +1,16 @@
+name: Backup to S3
+on:
+  push:
+jobs:
+  s3Backup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: S3 Backup
+        uses: peter-evans/s3-backup@v1
+        env:
+          ACCESS_KEY_ID: ${{ secrets.ORG_AWS_INFRA_SERVICE_ACCESS_KEY }}
+          SECRET_ACCESS_KEY: ${{ secrets.ORG_AWS_INFRA_SERVICE_SECRET_KEY }}
+          MIRROR_TARGET: df-github-backups/github/backups/experian/${{ github.ref_name }}
+        with:
+          args: --overwrite 
